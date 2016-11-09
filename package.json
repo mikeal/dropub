@@ -1,0 +1,28 @@
+{
+  "name": "dropub",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "budo index.js:bundle.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.mikealrogers.com)",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "bel": "^4.5.0",
+    "browserify-mime": "^1.2.9",
+    "drag-drop": "^2.12.1",
+    "element-class": "^0.2.2",
+    "emojione": "^2.2.6",
+    "funky": "^2.2.0",
+    "webtorrent": "^0.97.2",
+    "xhr": "^2.2.2"
+  },
+  "devDependencies": {
+    "browserify": "^13.1.1",
+    "budo": "^9.2.1",
+    "standard": "^8.5.0"
+  }
+}
