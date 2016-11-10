@@ -133,7 +133,7 @@ ${init}
       cursor: pointer;
     }
     div.dropub-file {
-      padding: 10px;
+      padding-top: 10px;
     }
     div.dropub-file a {
       color: black;
