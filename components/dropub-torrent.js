@@ -22,6 +22,7 @@ function fileEmoji (type) {
 
 function fileElement (f) {
   let type = mime.lookup(f.name)
+  let progress = bel`<progress value=0></progress>`
   let el = bel`
   <div class="dropub-file">
     <div class="dropub-file-emoji">
@@ -31,7 +32,7 @@ function fileElement (f) {
       <div class="dropub-filename-label
                   dropub-not-downloaded"
        ><a>${ f.name }</a></div>
-      <progress value=0></progress>
+      ${ f.done ? '' : progress }
     </div>
   </div>
   `
@@ -83,7 +84,7 @@ function init (elem, opts) {
       filemap[name].progress = el.parentNode.querySelector('progress')
       filemap[name].getBlobURL((err, url) => {
         if (err) return console.error(err)
-        filemap[name].progress.value = 1
+        if (filemap[name].progress) filemap[name].progress.value = 1
         elementClass(el).remove('dropub-not-downloaded')
         let a = el.querySelector('a')
         a.href = url

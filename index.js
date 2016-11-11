@@ -80,11 +80,11 @@ const processingElement = bel`
 
 function showDropView () {
   fill(dropElement)
-  pageTitle.textContent = 'Drag and Drop Files To Share'
+  pageTitle.textContent = 'Drop Files To Share'
   window.onload = () => {
     dragDrop('body', files => {
       fill(processingElement)
-      pageTitle.textContent = 'Processing Into a Torrent'
+      pageTitle.textContent = 'Creating Torrent'
       seed(files)
     })
   }
