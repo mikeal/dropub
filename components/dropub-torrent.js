@@ -42,6 +42,37 @@ function init (elem, opts) {
   let webtorrent = opts.webtorrent
   let torrent = opts.torrent
 
+  const modal = bel`
+  <div class="dropub-modal-background">
+    <style>
+    div.dropub-modal-container {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      width:100%;
+      align-items: center;
+    }
+    div.dropub-modal-container * {
+      align-self: center;
+    }
+    </style>
+    <div class="dropub-modal-container">
+    </div>
+  </div>
+  `
+  modal.onclick = () => {
+    elem.querySelector('div.dropub-files').style.filter = ''
+    modalContainer.innerHTML = ''
+    elem.removeChild(modal)
+  }
+  const modalContainer = modal.querySelector('div.dropub-modal-container')
+
+  function modalPreview (file) {
+    elem.querySelector('div.dropub-files').style.filter = 'blur(5px)'
+    file.appendTo(modalContainer)
+    elem.appendChild(modal)
+  }
+
   let filemap = {}
   torrent.files.forEach(f => { filemap[f.name] = f })
   let selector = 'div.dropub-file div.dropub-filename-label'
@@ -67,14 +98,21 @@ function init (elem, opts) {
       let selector = 'div.dropub-filename-label'
       let label = el.parentNode.parentNode.querySelector(selector)
       let name = label.textContent.trim()
-
-      console.log(filemap[name])
       if (filemap[name]) {
         console.log('select')
         filemap[name].select()
       } else {
         console.error('Could not find file in torrent.')
       }
+    }
+  })
+
+  selector = 'div.dropub-file-emoji img'
+  ;[...elem.querySelectorAll(selector)].forEach(el => {
+    el.onclick = (e) => {
+      let label = el.parentNode.parentNode.querySelector('div.dropub-filename-label')
+      let name = label.textContent.trim()
+      modalPreview(filemap[name])
     }
   })
 
@@ -168,6 +206,19 @@ ${init}
     div.dropub-filename progress {
       margin-top: 0px;
       padding-top: 0px;
+    }
+    div.dropub-modal-background {
+      display: block;
+      position fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width:100%;
+      position: fixed;
+      z-index: 99999;
+    }
+    div.dropub-file-emoji img {
+      cursor: pointer;
     }
   </style>
 
