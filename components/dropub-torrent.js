@@ -72,12 +72,12 @@ function init (elem, opts) {
 
   const blur = () => {
     elem.querySelector('div.dropub-files').style.filter = 'blur(5px)'
-    elem.querySelector('div.dropub-share').style.filter = 'blur(5px)'
+    elem.querySelector('div.dropub-buttons').style.filter = 'blur(5px)'
     elem.querySelector('dropub-notices').style.filter = 'blur(5px)'
   }
   const unblur = () => {
     elem.querySelector('div.dropub-files').style.filter = ''
-    elem.querySelector('div.dropub-share').style.filter = ''
+    elem.querySelector('div.dropub-buttons').style.filter = ''
     elem.querySelector('dropub-notices').style.filter = ''
   }
 
@@ -179,6 +179,54 @@ function init (elem, opts) {
   let addZipButton = () => {
     let btn = bel`<div class="dropub-zip-download">Download Zip</div>`
     elem.querySelector('div.dropub-buttons').appendChild(btn)
+
+    let worker = new window.Worker('/worker.js')
+
+    btn.onclick = () => {
+      let addLoader = container => {
+        let el = bel`
+        <div class="dropub-loading">
+          <div class="dropub-loading-label">Creating Zip</h3>
+          <div class="sk-fading-circle">
+            <div class="sk-circle1 sk-circle"></div>
+            <div class="sk-circle2 sk-circle"></div>
+            <div class="sk-circle3 sk-circle"></div>
+            <div class="sk-circle4 sk-circle"></div>
+            <div class="sk-circle5 sk-circle"></div>
+            <div class="sk-circle6 sk-circle"></div>
+            <div class="sk-circle7 sk-circle"></div>
+            <div class="sk-circle8 sk-circle"></div>
+            <div class="sk-circle9 sk-circle"></div>
+            <div class="sk-circle10 sk-circle"></div>
+            <div class="sk-circle11 sk-circle"></div>
+            <div class="sk-circle12 sk-circle"></div>
+          </div>
+        </div>
+        `
+        container.appendChild(el)
+      }
+      modalPreview({appendTo: addLoader})
+      let files = []
+      torrent.files.forEach(f => {
+        f.getBlob((e, blob) => {
+          if (e) return alert(e)
+          files.push({name: f.name, blob})
+          if (files.length === torrent.files.length) {
+            worker.postMessage({ type: 'compress', files })
+          }
+        })
+      })
+    }
+
+    // listen for messages from the worker
+    worker.onmessage = (e) => {
+      const data = e.data || {}
+
+      if (data.type === 'compressed') {
+        bel `<a href="${data.url}" download="${data.name}"></a>`.click()
+        modalContainer.click()
+      }
+    }
   }
   if (torrent.done) {
     addZipButton()
@@ -310,6 +358,9 @@ ${init}
     }
     div.dropub-buttons {
       display: flex;
+    }
+    div.dropub-loading-label {
+      font-size: 35px;
     }
   </style>
   <div class="dropub-buttons">
