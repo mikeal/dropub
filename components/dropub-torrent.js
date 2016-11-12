@@ -3,6 +3,7 @@ const bel = require('bel')
 const emojione = require('emojione')
 const elementClass = require('element-class')
 const mime = require('browserify-mime')
+const notices = require('./dropub-notices')
 
 const mojimap = {
   'audio/': '🎧',
@@ -111,7 +112,8 @@ function init (elem, opts) {
   selector = 'div.dropub-file-emoji img'
   ;[...elem.querySelectorAll(selector)].forEach(el => {
     el.onclick = (e) => {
-      let label = el.parentNode.parentNode.querySelector('div.dropub-filename-label')
+      let par = el.parentNode.parentNode
+      let label = par.querySelector('div.dropub-filename-label')
       let name = label.textContent.trim()
       modalPreview(filemap[name])
     }
@@ -146,6 +148,8 @@ function init (elem, opts) {
     // TODO: change to pause button
   }
   // elem.querySelector('span.dropub-download').onclick = startDownload
+
+  elem.appendChild(notices({torrent: torrent}))
 }
 
 const downarrow = () => bel([emojione.toImage(':arrow_down:')])
