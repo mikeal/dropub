@@ -3,6 +3,7 @@ const bel = require('bel')
 const emojione = require('emojione')
 const elementClass = require('element-class')
 const mime = require('browserify-mime')
+const Clipboard = require('clipboard')
 const notices = require('./dropub-notices')
 
 const mojimap = {
@@ -63,14 +64,25 @@ function init (elem, opts) {
   </div>
   `
   modal.onclick = () => {
-    elem.querySelector('div.dropub-files').style.filter = ''
+    unblur()
     modalContainer.innerHTML = ''
     elem.removeChild(modal)
   }
   const modalContainer = modal.querySelector('div.dropub-modal-container')
 
-  function modalPreview (file) {
+  const blur = () => {
     elem.querySelector('div.dropub-files').style.filter = 'blur(5px)'
+    elem.querySelector('div.dropub-share').style.filter = 'blur(5px)'
+    elem.querySelector('dropub-notices').style.filter = 'blur(5px)'
+  }
+  const unblur = () => {
+    elem.querySelector('div.dropub-files').style.filter = ''
+    elem.querySelector('div.dropub-share').style.filter = ''
+    elem.querySelector('dropub-notices').style.filter = ''
+  }
+
+  function modalPreview (file) {
+    blur()
     file.appendTo(modalContainer)
     elem.appendChild(modal)
   }
@@ -129,6 +141,8 @@ function init (elem, opts) {
     })
   })
 
+  // This isn't being used until the deselect actually
+  // prevents the files from being downloaded.
   let startDownload = () => {
     torrent.select(0, torrent.pieces.length - 1, 1)
 
@@ -149,7 +163,28 @@ function init (elem, opts) {
   }
   // elem.querySelector('span.dropub-download').onclick = startDownload
 
-  elem.appendChild(notices({torrent: torrent}))
+  // Attach notices UI
+  let noticeContainer = notices({torrent: torrent})
+  elem.appendChild(noticeContainer)
+
+  // Setup Share Button
+  let btn = elem.querySelector('div.dropub-share')
+  btn.setAttribute('data-clipboard-text', window.location.toString())
+  let clip = new Clipboard(btn)
+  clip.on('success', () => {
+    noticeContainer.addNotice('Copied url to clipboard!')
+  })
+
+  // Setup ZIP download button
+  let addZipButton = () => {
+    let btn = bel`<div class="dropub-zip-download">Download Zip</div>`
+    elem.querySelector('div.dropub-buttons').appendChild(btn)
+  }
+  if (torrent.done) {
+    addZipButton()
+  } else {
+    torrent.on('done', addZipButton)
+  }
 }
 
 const downarrow = () => bel([emojione.toImage(':arrow_down:')])
@@ -225,8 +260,61 @@ ${init}
     div.dropub-file-emoji img {
       cursor: pointer;
     }
+    div.dropub-buttons * {
+      -webkit-border-radius: 5;
+      -moz-border-radius: 5;
+      border-radius: 5px;
+      font-size: 16px;
+      padding: 5px 10px 5px 10px;
+      text-decoration: none;
+      width: fit-content;
+      margin-bottom: 5px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    div.dropub-share {
+      background: #3498db;
+      background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+      background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+      background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+      background-image: -o-linear-gradient(top, #3498db, #2980b9);
+      background-image: linear-gradient(to bottom, #3498db, #2980b9);
+      color: #ffffff;
+    }
+    div.dropub-share:hover {
+      background: #3cb0fd;
+      background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+      background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+      background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+      background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+      background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+      text-decoration: none;
+    }
+    div.dropub-zip-download {
+      background: #3498db;
+      background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+      background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+      background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+      background-image: -o-linear-gradient(top, #3498db, #2980b9);
+      background-image: linear-gradient(to bottom, #3498db, #2980b9);
+      color: #ffffff;
+    }
+    div.dropub-zip-download:hover {
+      background: #3cb0fd;
+      background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+      background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+      background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+      background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+      background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+      text-decoration: none;
+    }
+    div.dropub-buttons {
+      display: flex;
+    }
   </style>
-
+  <div class="dropub-buttons">
+    <div class="dropub-share">Share</div>
+  </div>
   <div class="dropub-files">
   ${ opts => opts.torrent.files.map(f => {
     return fileElement(f)
