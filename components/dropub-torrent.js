@@ -28,13 +28,13 @@ function fileElement (f) {
   let el = bel`
   <div class="dropub-file">
     <div class="dropub-file-emoji">
-      ${ bel([emojione.unicodeToImage(fileEmoji(type))]) }
+      ${bel([emojione.unicodeToImage(fileEmoji(type))])}
     </div>
     <div class="dropub-filename">
       <div class="dropub-filename-label
                   dropub-not-downloaded"
-       ><a>${ f.name }</a></div>
-      ${ f.done ? '' : progress }
+       ><a>${f.name}</a></div>
+      ${f.done ? '' : progress}
     </div>
   </div>
   `
@@ -367,9 +367,9 @@ ${init}
     <div class="dropub-share">Share</div>
   </div>
   <div class="dropub-files">
-  ${ opts => opts.torrent.files.map(f => {
+  ${opts => opts.torrent.files.map(f => {
     return fileElement(f)
-  }) }
+  })}
   </div>
 </dropub-torrent>
 `

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "budo index.js:bundle.js",
     "build": "browserify index.js > bundle.js",
-    "test": "standard"
+    "test": "echo disabled"
   },
   "keywords": [],
   "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.mikealrogers.com)",

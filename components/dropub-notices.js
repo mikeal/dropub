@@ -28,7 +28,7 @@ ${initNotice}
 const noticeView = funky`
 ${initNotice}
 <dropub-notice>
-  <div>${ str => str }</div>
+  <div>${str => str}</div>
 </dropub-notice>
 `
 
