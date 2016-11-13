@@ -167,14 +167,6 @@ function init (elem, opts) {
   let noticeContainer = notices({torrent: torrent})
   elem.appendChild(noticeContainer)
 
-  // Setup Share Button
-  let btn = elem.querySelector('div.dropub-share')
-  btn.setAttribute('data-clipboard-text', window.location.toString())
-  let clip = new Clipboard(btn)
-  clip.on('success', () => {
-    noticeContainer.addNotice('Copied url to clipboard!')
-  })
-
   // Setup ZIP download button
   let addZipButton = () => {
     let btn = bel`<div class="dropub-zip-download">Download Zip</div>`
@@ -233,6 +225,16 @@ function init (elem, opts) {
   } else {
     torrent.on('done', addZipButton)
   }
+
+  // Setup Share Button
+  setTimeout(() => {
+    let btn = elem.querySelector('div.dropub-share')
+    btn.setAttribute('data-clipboard-text', window.location.toString())
+    let clip = new Clipboard(btn)
+    clip.on('success', () => {
+      noticeContainer.addNotice('Copied url to clipboard!')
+    })
+  }, 0)
 }
 
 const downarrow = () => bel([emojione.toImage(':arrow_down:')])
