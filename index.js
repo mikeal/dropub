@@ -1,6 +1,6 @@
 /* globals history */
 const torrentView = require('./components/dropub-torrent')
-const webtorrent = require('../webtorrent')()
+const webtorrent = require('webtorrent')()
 const dragDrop = require('drag-drop')
 const bel = require('bel')
 const title = 'Dropub'
