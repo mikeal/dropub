@@ -1,6 +1,7 @@
 # dropub
 
-[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)>
+[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+
 P2P file sharing for everyone.
 
 Dropub is the easiest way to share files for free on the internet. It's like
