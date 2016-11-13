@@ -1,3 +1,4 @@
+/* globals alert */
 const funky = require('funky')
 const bel = require('bel')
 const emojione = require('emojione')
@@ -42,7 +43,7 @@ function fileElement (f) {
 }
 
 function init (elem, opts) {
-  let webtorrent = opts.webtorrent
+  // let webtorrent = opts.webtorrent
   let torrent = opts.torrent
 
   const modal = bel`
@@ -143,25 +144,25 @@ function init (elem, opts) {
 
   // This isn't being used until the deselect actually
   // prevents the files from being downloaded.
-  let startDownload = () => {
-    torrent.select(0, torrent.pieces.length - 1, 1)
+  // let startDownload = () => {
+  //   torrent.select(0, torrent.pieces.length - 1, 1)
 
-    let _finished = () => {}
+  //   let _finished = () => {}
 
-    let _update = () => {
-      let downloaded = torrent.downloaded
-      let percentage = Math.round(downloaded / torrent.length * 100)
-      let val = `( ${percentage}% )`
-      elem.querySelector('span.dropub-download-radio').textContent = val
-      if (downloaded !== torrent.length) setTimeout(_update, 1000)
-      else _finished()
-    }
-    _update()
+  //   let _update = () => {
+  //     let downloaded = torrent.downloaded
+  //     let percentage = Math.round(downloaded / torrent.length * 100)
+  //     let val = `( ${percentage}% )`
+  //     elem.querySelector('span.dropub-download-radio').textContent = val
+  //     if (downloaded !== torrent.length) setTimeout(_update, 1000)
+  //     else _finished()
+  //   }
+  //   _update()
 
-    elem.querySelector('span.dropub-download').style.display = 'none'
-    // TODO: change to pause button
-  }
-  // elem.querySelector('span.dropub-download').onclick = startDownload
+  //   elem.querySelector('span.dropub-download').style.display = 'none'
+  //   // TODO: change to pause button
+  // }
+  // // elem.querySelector('span.dropub-download').onclick = startDownload
 
   // Attach notices UI
   let noticeContainer = notices({torrent: torrent})
@@ -237,7 +238,7 @@ function init (elem, opts) {
   }, 0)
 }
 
-const downarrow = () => bel([emojione.toImage(':arrow_down:')])
+// const downarrow = () => bel([emojione.toImage(':arrow_down:')])
 
 const view = funky`
 ${init}
