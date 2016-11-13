@@ -7,19 +7,15 @@ const Clipboard = require('clipboard')
 const notices = require('./dropub-notices')
 
 const mojimap = {
-  'audio/': '🎧',
-  'video/': '📼',
-  'image/': '🖼',
+  'audio': '🎧',
+  'video': '📼',
+  'image': '🖼',
   'default': '💿'
 }
 
-const startsWith = (str, x) => str.indexOf(x) === 0
-
 function fileEmoji (type) {
-  for (var key in mojimap) {
-    if (startsWith(type, key)) return mojimap[key]
-  }
-  return mojimap.default
+  let media = type.split(`/`)[0]
+  return mojimap[media] || mojimap.default
 }
 
 function fileElement (f) {
