@@ -1,11 +1,11 @@
-/* globals history */
+/* globals history, URL */
 const torrentView = require('./components/dropub-torrent')
 const webtorrent = require('webtorrent')()
 const dragDrop = require('drag-drop')
 const bel = require('bel')
 const title = 'Dropub'
 
-const search = window.location.search
+const url = new URL(window.location.toString())
 const container = document.getElementById('main-container')
 const clear = () => {
   pageTitle.innerHTML = ''
@@ -90,8 +90,20 @@ function showDropView () {
   }
 }
 
-if (search.length) {
-  showTorrentView(search)
+function isMagnet () {
+  let params = ['xt', 'dn', 'tr']
+  for (var i = 0; i < params.length; i++) {
+    if (url.searchParams.has(params[i])) return true
+  }
+  return false
+}
+
+let getSearch = () => '?' + [...url.searchParams].map(([key, value]) => {
+  return key + '=' + value
+}).join('&')
+
+if (isMagnet()) {
+  showTorrentView(getSearch())
 } else {
   showDropView()
 }
