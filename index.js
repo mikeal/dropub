@@ -98,12 +98,8 @@ function isMagnet () {
   return false
 }
 
-let getSearch = () => '?' + [...url.searchParams].map(([key, value]) => {
-  return key + '=' + value
-}).join('&')
-
 if (isMagnet()) {
-  showTorrentView(getSearch())
+  showTorrentView(window.location.search)
 } else {
   showDropView()
 }
