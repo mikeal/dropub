@@ -5,7 +5,7 @@
 P2P file sharing for everyone.
 
 Dropub is the easiest way to share files for free on the internet. It's like
-dropub meets bittorrent.
+Dropbox meets BitTorrent.
 
 ## Table of Contents
 
