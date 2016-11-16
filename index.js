@@ -6,6 +6,7 @@ const bel = require('bel')
 const title = 'Dropub'
 
 const url = new URL(window.location.toString())
+const search = url.searchParams
 const container = document.getElementById('main-container')
 const clear = () => {
   pageTitle.innerHTML = ''
@@ -17,6 +18,33 @@ const fill = elem => {
 }
 const updateUrl = search => {
   history.pushState({}, title, search)
+}
+
+let isEmbed
+if (search.get('embed') && search.get('embed') !== 'false') {
+  let embedStyles = bel`
+  <style>
+    body {
+      background-color: white;
+    }
+    a#github-link {
+      display:none;
+    }
+    div#page-title {
+      top: .25em;
+      color: grey;
+      font-size: 27px;
+    }
+    div#main-container {
+      justify-content: flex-start;
+    }
+    dropub-torrent {
+      margin: 0;
+    }
+  </style>
+  `
+  document.body.appendChild(embedStyles)
+  isEmbed = true
 }
 
 function showTorrentView (search) {
@@ -56,6 +84,15 @@ function seed (files) {
     fill(elem)
     updateUrl(search)
     pageTitle.innerHTML = ''
+
+    if (isEmbed && torrent.done) {
+      let msg = {
+        app: 'dropub',
+        api: 'https://bongbong.chat/api/v1',
+        embed: `https://dropub.com${search}&embed=true`
+      }
+      window.parent.postMessage(msg, '*')
+    }
   })
 }
 
@@ -93,7 +130,7 @@ function showDropView () {
 function isMagnet () {
   let params = ['xt', 'dn', 'tr']
   for (var i = 0; i < params.length; i++) {
-    if (url.searchParams.has(params[i])) return true
+    if (search.has(params[i])) return true
   }
   return false
 }

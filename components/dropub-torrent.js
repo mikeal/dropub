@@ -223,14 +223,17 @@ function init (elem, opts) {
     torrent.on('done', addZipButton)
   }
 
-  // Setup Share Button
   setTimeout(() => {
+    // Setup Share Button
     let btn = elem.querySelector('div.dropub-share')
     btn.setAttribute('data-clipboard-text', window.location.toString())
     let clip = new Clipboard(btn)
     clip.on('success', () => {
       noticeContainer.addNotice('Copied url to clipboard!')
     })
+    // Pass height change message for embed.
+    let msg = {height: document.body.offsetHeight}
+    if (window.parent) window.parent.postMessage(msg, '*')
   }, 0)
 }
 
