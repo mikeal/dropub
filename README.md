@@ -1,5 +1,7 @@
 # dropub
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mikeal/dropub.svg)](https://greenkeeper.io/)
+
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 P2P file sharing for everyone.
