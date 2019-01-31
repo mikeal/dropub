@@ -15,7 +15,7 @@
     "bel": "^4.5.0",
     "browserify-mime": "^1.2.9",
     "clipboard": "^1.5.15",
-    "drag-drop": "^2.12.1",
+    "drag-drop": "^4.2.0",
     "element-class": "^0.2.2",
     "emojione": "^2.2.6",
     "funky": "^2.2.0",
