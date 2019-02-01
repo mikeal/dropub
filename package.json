@@ -12,7 +12,7 @@
   "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.mikealrogers.com)",
   "license": "Apache-2.0",
   "dependencies": {
-    "bel": "^4.5.0",
+    "bel": "^6.0.0",
     "browserify-mime": "^1.2.9",
     "clipboard": "^1.5.15",
     "drag-drop": "^2.12.1",
