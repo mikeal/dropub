@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "babili": "0.0.8",
-    "browserify": "^13.1.1",
+    "browserify": "^16.2.3",
     "budo": "^9.2.1",
     "standard": "^8.5.0",
     "standard-readme": "^1.0.22"
