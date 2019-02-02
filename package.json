@@ -1,0 +1,23 @@
+{
+  "name": "dropub-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikeal/dropub.git"
+  },
+  "keywords": [],
+  "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (https://www.mikealrogers.com/)",
+  "license": "(Apache-2.0 AND MIT)",
+  "bugs": {
+    "url": "https://github.com/mikeal/dropub/issues"
+  },
+  "homepage": "https://github.com/mikeal/dropub#readme",
+  "dependencies": {
+    "@vue/cli": "^3.4.0"
+  }
+}
