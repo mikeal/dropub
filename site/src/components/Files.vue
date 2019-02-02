@@ -21,8 +21,8 @@ export default {
   }),
   created: async function () {
     let cid = this.$props.cid
-    await ipfs.ready
-    this.$data.files.splice(0, 0, ...(await ipfs.ls(cid))) 
+    //await ipfs.ready
+    //this.$data.files.splice(0, 0, ...(await ipfs.ls(cid))) 
   }
 }
 </script>
