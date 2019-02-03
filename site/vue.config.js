@@ -7,6 +7,9 @@ module.exports = {
       fs: 'empty',
       net: 'empty',
       tls: 'empty'
+    },
+    output: {
+      filename: '[name].[hash].js'
     }
   }
 }
