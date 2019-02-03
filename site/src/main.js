@@ -9,7 +9,7 @@ Vue.config.productionTip = false
 
 const routes = [
   { path: '/', component: Files },
-  { path: '/cid/:cid', component: Files, props: true }
+  { path: '/cid/:cid*', component: Files, props: true }
 ]
 
 // 3. Create the router instance and pass the `routes` option
