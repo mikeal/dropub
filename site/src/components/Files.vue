@@ -11,7 +11,13 @@
 </template>
 
 <script>
-const ipfs = require('../ipfs')
+// import ipfs from '../ipfs'
+// console.log({ipfs})
+const IPFS = Ipfs
+const ipfs = new IPFS({
+  repo: 'dropub'
+})
+ipfs.ready = new Promise(resolve => ipfs.on('ready', resolve))
 
 export default {
   name: 'files-page',
@@ -20,9 +26,14 @@ export default {
     files: []
   }),
   created: async function () {
+    console.log(3)
     let cid = this.$props.cid
-    //await ipfs.ready
-    //this.$data.files.splice(0, 0, ...(await ipfs.ls(cid))) 
+    console.log('cid', cid)
+    await ipfs.ready
+    console.log('ready')
+    let _files = await ipfs.ls(cid)
+    console.log(files)
+    this.$data.files.splice(0, 0, _files) 
   }
 }
 </script>
