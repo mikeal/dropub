@@ -1,32 +1,23 @@
 {
-  "name": "dropub",
-  "version": "0.2.1",
+  "name": "dropub-website",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "budo index.js:bundle.js",
-    "build": "browserify index.js | babili -o bundle.js",
-    "test": "standard"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikeal/dropub.git"
   },
   "keywords": [],
-  "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.mikealrogers.com)",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "bel": "^4.5.0",
-    "browserify-mime": "^1.2.9",
-    "clipboard": "^1.5.15",
-    "drag-drop": "^2.12.1",
-    "element-class": "^0.2.2",
-    "emojione": "^2.2.6",
-    "funky": "^2.2.0",
-    "webtorrent": "git://github.com/feross/webtorrent.git#master",
-    "xhr": "^2.2.2"
+  "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (https://www.mikealrogers.com/)",
+  "license": "(Apache-2.0 AND MIT)",
+  "bugs": {
+    "url": "https://github.com/mikeal/dropub/issues"
   },
-  "devDependencies": {
-    "babili": "0.0.8",
-    "browserify": "^13.1.1",
-    "budo": "^9.2.1",
-    "standard": "^8.5.0",
-    "standard-readme": "^1.0.22"
+  "homepage": "https://github.com/mikeal/dropub#readme",
+  "dependencies": {
+    "@vue/cli": "^3.4.0"
   }
 }
