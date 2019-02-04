@@ -2,19 +2,21 @@
   <div class="files-page">
     <h2>Files</h2>
     <div>CID: {{cid}}</div>
-    <div v-if="files.length">
-      <div v-for="file in files" v-bind:key=file.name>
-        <div v-if="file.type == 'dir'">
+    <div v-if="files.length" class="files-container">
+      <div v-for="file in files" v-bind:key=file.name class="file-container">
+        <div v-if="file.type == 'dir'" class="file file-dir">
           <router-link :to="{path: file.name}" append>{{file.name}}</router-link>
         </div>
-        <div v-if="file.type == 'file'">
-          <div v-if="file.url">
+        <div v-if="file.type == 'file'" class="file file-file">
+          <FileIcon />
+          <div v-if="file.url" class="file-name file-download">
             <a :href=file.url :download=file.name>{{file.name}}</a>
           </div>
-          <div v-else>
+          <div v-else class="file-name file-downloading">
             <div>{{file.name}}</div>
             <progress :max=file.size :value=file.downloaded />
           </div>
+          <div class="file-size">{{file.size}}</div>
         </div>
       </div>
     </div>
@@ -25,6 +27,7 @@
 </template>
 
 <script>
+import { FileIcon } from 'vue-feather-icons'
 const mime = require('mime')
 const IPFS = window.Ipfs
 const ipfs = new IPFS({
@@ -70,6 +73,7 @@ const loadFiles = async (files, path) => {
 export default {
   name: 'files-page',
   props: ['cid'],
+  components: { FileIcon },
   data: () => ({
     files: []
   }),
@@ -87,3 +91,27 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+div.files-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+div.file-container {
+  width: 400px;
+}
+div.file {
+  display: grid;
+  grid-template-columns: 50px 300px 50px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "FileIcon div.file-name div.file-size"
+    ". progress .";
+}
+div.file-name {
+  text-align: left;
+}
+</style>
