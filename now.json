@@ -2,12 +2,12 @@
   "version": 2,
   "alias": ["dropub.com"],
   "builds": [
-    { "src": "site/package.json",
-      "use": "@now/static-build",
-      "config": {
-        "distDir": "site/dist"
-      }
+    { "src": "package.json",
+      "use": "@now/static-build"
     }
+  ],
+  "routes": [
+    { "src": "/cid/(.*)", "dest": "/index.html" }
   ]
  }
 
