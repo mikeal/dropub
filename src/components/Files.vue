@@ -96,7 +96,7 @@ export default {
 div.files-container {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -105,7 +105,7 @@ div.file-container {
 }
 div.file {
   display: grid;
-  grid-template-columns: 50px 300px 50px;
+  grid-template-columns: 30px 300px 50px;
   grid-template-rows: auto;
   grid-template-areas:
     "FileIcon div.file-name div.file-size"
@@ -113,5 +113,8 @@ div.file {
 }
 div.file-name {
   text-align: left;
+}
+progress {
+  width: 100%;
 }
 </style>
