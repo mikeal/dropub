@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "alias": ["dropub.com"],
+  "builds": [
+    { "src": "site/package.json",
+      "use": "@now/static-build",
+      "config": {
+        "distDir": "site/dist"
+      }
+    }
+  ]
+ }
+

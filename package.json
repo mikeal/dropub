@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mikeal/dropub#readme",
   "dependencies": {
-    "@vue/cli": "^3.4.0"
+    "@vue/cli": "^3.4.0",
+    "now": "^13.1.2"
   }
 }
