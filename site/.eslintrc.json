@@ -1,4 +1,8 @@
 {
+  "extends": [
+    "plugin:vue/essential",
+    "standard"
+  ],
   "rules": {
     "no-console": "off"
   }

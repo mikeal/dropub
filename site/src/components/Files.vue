@@ -4,7 +4,7 @@
     <div>CID: {{cid}}</div>
     <div>blah</div>
     <div v-if="files.length">
-      <div v-for="file in files">
+      <div v-for="file in files" v-bind:key=file.name>
         <div>t: {{file.name}}</div>
         <div v-if="file.type == 'dir'">
           <router-link :to="{path: file.name}" append>{{file.name}}</router-link>
@@ -20,9 +20,7 @@
 </template>
 
 <script>
-// import ipfs from '../ipfs'
-// console.log({ipfs})
-const IPFS = Ipfs
+const IPFS = window.Ipfs
 const ipfs = new IPFS({
   repo: 'dropub'
 })
@@ -45,4 +43,3 @@ export default {
   }
 }
 </script>
-
