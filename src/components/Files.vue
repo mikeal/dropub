@@ -9,7 +9,7 @@
         </div>
         <div v-if="file.type == 'file'">
           <div v-if="file.url">
-            <a :href=file.url>{{file.name}}</a>
+            <a :href=file.url :download=file.name>{{file.name}}</a>
           </div>
           <div v-else>
             <div>{{file.name}}</div>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+const mime = require('mime')
 const IPFS = window.Ipfs
 const ipfs = new IPFS({
   repo: 'dropub'
@@ -33,7 +34,7 @@ ipfs.ready = new Promise(resolve => ipfs.on('ready', resolve))
 
 const getReadableStream = path => new Promise((resolve, reject) => {
   let stream = ipfs.getReadableStream(path)
-  stream.once('data', entry => resolve(entry.content))
+  stream.once('data', entry => resolve(entry))
   stream.on('error', reject)
   stream.on('end', () => reject(new Error('no found')))
 })
@@ -46,15 +47,20 @@ const loadFiles = async (files, path) => {
     file.url = null
     files.push(file)
     if (file.type === 'file') {
-      getReadableStream(`${path}/${file.name}`).then(stream => {
+      getReadableStream(`${path}/${file.name}`).then(entry => {
         let buffers = []
+        let stream = entry.content
+        stream.resume()
+        file.size = entry.size
+
         stream.on('data', buffer => {
           buffers.push(buffer)
           file.downloaded += buffer.length
         })
         stream.on('end', () => {
-          let f = new window.Blob(buffers, 'octet/stream')
-          file.url = URL.getObjectURL(f)
+          const f = new window.Blob(buffers, { type: mime.getType(file.name) })
+          const url = window.URL.createObjectURL(f)
+          file.url = url
         })
       })
     }
