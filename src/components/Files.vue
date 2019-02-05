@@ -5,10 +5,13 @@
     <div v-if="files.length" class="files-container">
       <div v-for="file in files" v-bind:key=file.name class="file-container">
         <div v-if="file.type == 'dir'" class="file file-dir">
-          <router-link :to="{path: file.name}" append>{{file.name}}</router-link>
+          <FolderIcon class="icon" />
+          <div class="file-name">
+            <router-link :to="{path: file.name}" append>{{file.name}}</router-link>
+          </div>
         </div>
         <div v-if="file.type == 'file'" class="file file-file">
-          <FileIcon />
+          <FileIcon class="icon" />
           <div v-if="file.url" class="file-name file-download">
             <a :href=file.url :download=file.name>{{file.name}}</a>
           </div>
@@ -16,7 +19,7 @@
             <div>{{file.name}}</div>
             <progress :max=file.size :value=file.downloaded />
           </div>
-          <div class="file-size">{{file.size}}</div>
+          <div class="file-size">{{file.prettySize}}</div>
         </div>
       </div>
     </div>
@@ -27,7 +30,8 @@
 </template>
 
 <script>
-import { FileIcon } from 'vue-feather-icons'
+import { FileIcon, FolderIcon } from 'vue-feather-icons'
+const prettyBytes = require('pretty-bytes')
 const mime = require('mime')
 const IPFS = window.Ipfs
 const ipfs = new IPFS({
@@ -55,6 +59,7 @@ const loadFiles = async (files, path) => {
         let stream = entry.content
         stream.resume()
         file.size = entry.size
+        file.prettySize = prettyBytes(entry.size)
 
         stream.on('data', buffer => {
           buffers.push(buffer)
@@ -73,7 +78,7 @@ const loadFiles = async (files, path) => {
 export default {
   name: 'files-page',
   props: ['cid'],
-  components: { FileIcon },
+  components: { FileIcon, FolderIcon },
   data: () => ({
     files: []
   }),
@@ -108,7 +113,7 @@ div.file {
   grid-template-columns: 30px 300px 50px;
   grid-template-rows: auto;
   grid-template-areas:
-    "FileIcon div.file-name div.file-size"
+    ".icon div.file-name div.file-size"
     ". progress .";
 }
 div.file-name {
