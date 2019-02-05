@@ -1,7 +1,6 @@
 <template>
   <div class="files-page">
     <h2>Files</h2>
-    <div>CID: {{cid}}</div>
     <div v-if="files.length" class="files-container">
       <div v-for="file in files" v-bind:key=file.name class="file-container">
         <div v-if="file.type == 'dir'" class="file file-dir">
