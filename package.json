@@ -12,7 +12,7 @@
     "mime": "^2.4.0",
     "pretty-bytes": "^5.1.0",
     "setimmediate": "^1.0.5",
-    "vue": "^2.6.3",
+    "vue": "^2.6.6",
     "vue-feather-icons": "^4.10.0",
     "vue-router": "^3.0.2"
   },
@@ -28,7 +28,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.6.3"
+    "vue-template-compiler": "^2.6.6"
   },
   "eslintConfig": {
     "root": true,
