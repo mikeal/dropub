@@ -9,7 +9,7 @@
     "now-build": "vue-cli-service build"
   },
   "dependencies": {
-    "mime": "^2.4.0",
+    "mime": "^2.4.1",
     "pretty-bytes": "^5.1.0",
     "setimmediate": "^1.0.5",
     "vue": "^2.6.10",
